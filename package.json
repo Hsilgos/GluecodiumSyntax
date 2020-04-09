@@ -1,0 +1,13 @@
+{
+  "name": "Gluecodium",
+  "description": "A language grammar for Gluecodium project",
+  "details": "https://github.com/Hsilgos/GluecodiumSyntax",
+  "author": "Yauheni Khnykin (Hsilgos)",
+  "labels": ["language syntax"],
+  "releases": [
+    {
+      "sublime_text": "*",
+      "tags": true
+    }
+  ]
+}
