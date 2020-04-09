@@ -1,0 +1,785 @@
+// SYNTAX TEST "Gluecodium.sublime-syntax"
+
+   package com.example
+// ^^^^^^^ keyword.other.package.lime
+//         ^^^^^^^^^^^ meta.path.lime entity.name.namespace.lime
+
+    import com.my.example
+//  ^^^^^^ keyword.control.import.lime
+//         ^^^^^^^^^^^^^^ meta.path.lime support.type.package.lime
+
+    # Some one-line Comment
+//  ^ comment.line.lime punctuation.definition.comment.lime
+//    ^^^^^^^^^^^^^^^^^^^^^^ comment.line.lime
+
+    // Line of documentation
+//  ^^ comment.line.double-slash.lime punctuation.definition.comment.lime
+//     ^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime
+
+    // Line of documentation with [example.Reference] inside and one more [Reference]
+//  ^^ comment.line.double-slash.lime punctuation.definition.comment.lime
+//     ^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime
+//                                ^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime markup.underline.link.lime
+//                                                    ^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime
+//                                                                        ^^^^^^^^^^^ comment.line.double-slash.lime markup.underline.link.lime
+
+
+    // Doc with range: [12,20]
+//  ^^ comment.line.double-slash.lime punctuation.definition.comment.lime
+//     ^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime
+
+    // Documentation {@Java for java only} and the rest
+//  ^^ comment.line.double-slash.lime punctuation.definition.comment.lime
+//     ^^^^^^^^^^^^^ comment.line.double-slash.lime
+//                   ^ meta.inline-tag.lime punctuation.section.inline-tag.begin.lime
+//                    ^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+//                          ^^^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                                       ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
+//                                         ^^^^^^^^^^^^^ comment.line.double-slash.lime
+
+    // Documentation {@Java @Swift for java and Swift only} and the rest
+//  ^^ comment.line.double-slash.lime punctuation.definition.comment.lime
+//     ^^^^^^^^^^^^^ comment.line.double-slash.lime
+//                   ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.begin.lime
+//                    ^^^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+//                                 ^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                                                        ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
+//                                                          ^^^^^^^^^^^^^ comment.line.double-slash.lime
+
+
+    // Documentation {@Java with [example.Reference] for Java} and the rest
+//                   ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.begin.lime
+//                    ^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+//                          ^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                               ^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.underline.link.lime
+//                                                   ^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                                                           ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
+
+    // Documentation {@Java with [example.Reference] and another [Reference] for Java} and the rest
+//                   ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.begin.lime
+//                    ^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+//                          ^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                               ^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.underline.link.lime
+//                                                   ^^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                                                               ^^^^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.underline.link.lime
+//                                                                           ^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+//                                                                                   ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
+
+    enum EnumName {
+//  ^^^^ meta.enum.lime meta.enum.identifier.lime keyword.declaration.enum
+//       ^^^^^^^^ meta.enum.lime meta.enum.identifier.lime entity.name.enum.lime
+//                ^ meta.enum.lime meta.enum.body.lime meta.block.lime punctuation.section.block.begin.lime
+
+        ENUM_VALUE1,
+//      ^^^^^^^^^^^ meta.enum.body.lime meta.block.lime constant.other.enum.lime
+//                 ^ meta.enum.body.lime meta.block.lime punctuation.separator.comma.lime
+
+        ENUM_VALUE2,
+//      ^^^^^^^^^^^ meta.enum.body.lime meta.block.lime constant.other.enum.lime
+//                 ^ meta.enum.body.lime meta.block.lime punctuation.separator.comma.lime
+
+        ENUM_VALUE1 = 123,
+//      ^^^^^^^^^^^ meta.enum.body.lime meta.block.lime constant.other.enum.lime
+//                  ^ meta.enum.body.lime meta.block.lime keyword.operator.assignment.lime
+//                    ^^^ meta.enum.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+//                       ^^ meta.enum.body.lime meta.block.lime
+
+        ENUM_VALUE4 = 456
+//      ^^^^^^^^^^^ meta.enum.body.lime meta.block.lime constant.other.enum.lime
+//                  ^ meta.enum.body.lime meta.block.lime keyword.operator.assignment.lime
+//                    ^^^ meta.enum.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+//                       ^ meta.enum.body.lime meta.block.lime
+    }
+
+    interface Foo {}
+//  ^^^^^^^^^ meta.class.identifier.lime keyword.declaration.class.lime
+//            ^^^ meta.class.identifier.lime entity.name.class.lime
+
+    class Foo {}
+//  ^^^^^ meta.class.identifier.lime keyword.declaration.class.lime
+//        ^^^ meta.class.identifier.lime entity.name.class.lime
+
+    types Foo {}
+//  ^^^^^ meta.class.identifier.lime keyword.declaration.class.lime
+//        ^^^ meta.class.identifier.lime entity.name.class.lime
+
+    @Equitable
+//  ^ meta.annotation.lime punctuation.definition.annotation.lime
+//   ^^^^^^^^^ meta.annotation.lime variable.annotation.lime
+    class Foo {
+//  ^^^^^ meta.class.identifier.lime keyword.declaration.class.lime
+//        ^^^ meta.class.identifier.lime entity.name.class.lime
+//            ^ meta.class.body.lime meta.block.lime punctuation.section.block.begin.lime
+//             ^ meta.class.body.lime meta.block.lime
+
+        @Equitable
+        interface InnerInterface {
+//      ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.identifier.lime keyword.declaration.class.lime
+//                ^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.identifier.lime entity.name.class.lime
+//                               ^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime punctuation.section.block.begin.lime
+//                                ^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime
+        }
+
+        variable_name: VariableType
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        variable_name: VariableType?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                             ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+        variable_name: full.path.Type
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                      ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                          ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                           ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+        variable_name: full.path.Type?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                      ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                          ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                           ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+    //                               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+        const variable_name: VariableType
+    //  ^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //        ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+        internal variable_name: VariableType
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //           ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+        internal const variable_name: VariableType
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //           ^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //                 ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+        variable_name: List<Object>
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+
+        variable_name: List<Object>?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+    //                             ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+        variable_name: List<Object?>
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.generic.lime keyword.operator.declaration.lime
+    //                             ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+
+        variable_name: List<Object?>?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.generic.lime keyword.operator.declaration.lime
+    //                             ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+    //                              ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+        variable_name: List<my.package.Object>
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                        ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                         ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                                ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                 ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.class.lime
+    //                                       ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+        variable_name: List<my.package.Object>?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                        ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                         ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                                ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                 ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.class.lime
+    //                                       ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+    //                                        ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+        variable_name: Map< Key, Value >
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                         ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+    //                           ^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                                 ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+
+        variable_name: Map< Key, Value >?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                      ^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                         ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+    //                           ^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                                 ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+    //                                  ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+        variable_name: Map<Int, my.package.MyType?>
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                     ^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                        ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+    //                          ^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                             ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                                    ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                     ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.class.lime
+    //                                           ^ meta.class.body.lime meta.block.lime meta.generic.lime keyword.operator.declaration.lime
+    //                                            ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+        variable_name: Map<Int, my.package.MyType?>?
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                     ^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                        ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+    //                          ^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                             ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.type.package.lime
+    //                                    ^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                     ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime meta.path.lime support.class.lime
+    //                                           ^ meta.class.body.lime meta.block.lime meta.generic.lime keyword.operator.declaration.lime
+    //                                            ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+    //                                             ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+
+        variable_name: MyEnum = MyEnum.Value
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                        ^ meta.class.body.lime meta.block.lime keyword.operator.assignment.lime
+    //                          ^^^^^^ meta.class.body.lime meta.block.lime support.class.lime punctuation.accessor.dot.lime
+    //                                ^^^^^^^ meta.class.body.lime meta.block.lime
+        variable_name: MyEnum = full.path.MyEnum.Value
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                        ^ meta.class.body.lime meta.block.lime keyword.operator.assignment.lime
+    //                          ^^^^ meta.class.body.lime meta.block.lime support.class.lime punctuation.accessor.dot.lime
+    //                                           ^^^^^ meta.class.body.lime meta.block.lime constant.other.enum.lime
+
+        variable_name: Double = 0
+    //  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+    //               ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                 ^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                        ^ meta.class.body.lime meta.block.lime keyword.operator.assignment.lime
+    //                          ^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+
+        variable_name: Double = 100
+    //                          ^^^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+        variable_name: Double = -100
+    //                          ^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime keyword.operator
+    //                           ^^^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+        variable_name: Double = -10.3
+    //                          ^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime keyword.operator
+    //                           ^^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+    //                             ^ meta.class.body.lime meta.block.lime constant.numeric.float.decimal.lime punctuation.separator.decimal.lime
+    //                              ^ meta.class.body.lime meta.block.lime constant.numeric.float.decimal.lime
+        variable_name: Double = 1.41e-2
+    //                          ^^^^^^^ meta.class.body.lime meta.block.lime constant.numeric.float.decimal.lime
+        variable_name: Double = -1.41e-2
+    //                          ^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime keyword.operator
+    //                           ^ meta.class.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+        variable_name: Double = NaN
+    //                          ^^^ meta.class.body.lime meta.block.lime constant.language.lime
+        variable_name: Double = Infinity
+    //                          ^^^^^^^^ meta.class.body.lime meta.block.lime constant.language.lime
+        variable_name: Double = -Infinity
+    //                          ^ meta.class.body.lime meta.block.lime constant.language.lime keyword.operator
+    //                           ^^^^^^^^ meta.class.body.lime meta.block.lime constant.language.lime
+
+        variable_name: String = "Some Text"
+    //                          ^^^^^^^^^^^ meta.class.body.lime meta.block.lime string.quoted.double.lime
+        variable_name: String = "\tText \r with \n escape \" symbols \\ end. "
+    //                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime string.quoted.double.lime
+    //                           ^^ meta.class.body.lime meta.block.lime string.quoted.double.lime constant.character.escape.lime
+    //                                  ^^ meta.class.body.lime meta.block.lime string.quoted.double.lime constant.character.escape.lime
+    //                                          ^^ meta.class.body.lime meta.block.lime string.quoted.double.lime constant.character.escape.lime
+    //                                                    ^^ meta.class.body.lime meta.block.lime string.quoted.double.lime constant.character.escape.lime
+    //                                                               ^^ meta.class.body.lime meta.block.lime string.quoted.double.lime constant.character.escape.lime
+        variable_name: Double? = null
+    //                       ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                           ^^^^ meta.class.body.lime meta.block.lime constant.language.lime
+        variable_name: MyType = {1, 10.0, -1, NaN, -Infinity, 1.14e-1, "text"}
+    //                          ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime punctuation.section.braces.begin.lime
+    //                           ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.numeric.integer.decimal.lime
+    //                              ^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.numeric.float.decimal.lime
+    //                                    ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.numeric.integer.decimal.lime keyword.operator
+    //                                        ^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.language.lime
+    //                                             ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.language.lime keyword.operator
+    //                                              ^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.language.lime
+    //                                                        ^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.numeric.float.decimal.lime
+    //                                                                 ^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime string.quoted.double.lime
+    //                                                                       ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+        variable_name: MyType = {{1}, {NaN, null}, {}}
+    //                          ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime punctuation.section.braces.begin.lime
+    //                           ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.begin.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime constant.numeric.integer.decimal.lime
+    //                             ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+    //                                ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.begin.lime
+    //                                 ^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime constant.language.lime
+    //                                      ^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime constant.language.lime
+    //                                          ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+    //                                             ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.begin.lime
+    //                                              ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+    //                                               ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+
+        variable_name: MyType = {flagOption = true, uintOption = 42, floatOption=1.34e-10, typeParam = {}, listParam = [1, 2]}
+    //                           ^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime variable.parameter.lime
+    //                                        ^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.language.lime
+    //                                              ^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime variable.parameter.lime
+    //                                                           ^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.numeric.integer.decimal.lime
+    //                                                               ^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime variable.parameter.lime
+    //                                                                           ^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime constant.numeric.float.decimal.lime
+    //                                                                                     ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime variable.parameter.lime
+    //                                                                                                 ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.begin.lime
+    //                                                                                                  ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+    //                                                                                                     ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime variable.parameter.lime
+    //                                                                                                                       ^ meta.class.body.lime meta.block.lime meta.braces.type-initialization.lime punctuation.section.braces.end.lime
+        variable_name: List<Int> = [1, 2]
+    //                             ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime punctuation.section.brackets.begin.lime
+    //                              ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime constant.numeric.integer.decimal.lime
+    //                               ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime punctuation.separator.comma.lime
+    //                                 ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime constant.numeric.integer.decimal.lime
+    //                                  ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime punctuation.section.brackets.end.lime
+        variable_name: List<String> = ["1", "text", "three"]
+    //                                 ^^^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime string.quoted.double.lime
+    //                                      ^^^^^^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime string.quoted.double.lime
+    //                                              ^^^^^^^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime string.quoted.double.lime
+        variable_name: Map<Int, String> = [1: "1", 2: "text", 3: "three"]
+    //                                     ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime constant.numeric.integer.decimal.lime
+    //                                      ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime keyword.operator.assignment.lime
+    //                                        ^^^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime string.quoted.double.lime
+    //                                             ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime constant.numeric.integer.decimal.lime
+    //                                              ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime keyword.operator.assignment.lime
+    //                                                ^^^^^^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime string.quoted.double.lime
+    //                                                        ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime constant.numeric.integer.decimal.lime
+    //                                                         ^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime keyword.operator.assignment.lime
+    //                                                           ^^^^^^^ meta.class.body.lime meta.block.lime meta.brackets.array-initialization.lime string.quoted.double.lime
+        property variable_name: PropertyType
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime entity.name.function.lime
+    //           ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime variable.parameter.property.lime
+    //                        ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                          ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        static property variable_name: PropertyType
+    //  ^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //         ^^^^^^^^ meta.class.body.lime meta.block.lime entity.name.function.lime
+        internal static property variable_name: PropertyType
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //           ^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //                  ^^^^^^^^ meta.class.body.lime meta.block.lime entity.name.function.lime
+        property variable_name: PropertyType?
+    //                                      ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+        property variable_name: Map< Key, Value >
+    //                          ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                             ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                               ^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                                  ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+    //                                    ^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                                          ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+
+        internal property variable_name: Map< Key, Value >
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+
+        property variable_name: PropertyType {get set}
+    //                                       ^ meta.class.body.lime meta.block.lime punctuation.section.block.begin.lime
+    //                                        ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+    //                                            ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+    //                                               ^ meta.class.body.lime meta.block.lime punctuation.section.block.end.lime
+
+        // Documentation {@Java java} test
+    //  ^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+    //                    ^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+    //                          ^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+        variable_name: PropertyType
+
+        internal property variable_name: PropertyType {
+
+            // Documentation {@Java java} test
+        //                    ^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+        //                          ^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+            get
+        //  ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+        }
+
+        internal property variable_name: PropertyType {
+            internal get
+        //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+        //           ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+            internal set
+        //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+        //           ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+        }
+
+        static property variable_name: Map<Int, String?>? {
+    //  ^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //                                                ^ meta.class.body.lime meta.block.lime meta.generic.lime keyword.operator.declaration.lime
+    //                                                  ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+            get
+            set
+        }
+
+        internal static property variable_name: Map<Int, String?>? {
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //           ^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+            internal get
+    //      ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //               ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+        }
+
+        enum EnnerEnum {
+    //  ^^^^ meta.class.body.lime meta.block.lime meta.enum.lime meta.enum.identifier.lime keyword.declaration.enum
+    //       ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.enum.lime meta.enum.identifier.lime entity.name.enum.lime
+            VALUE1,
+    //      ^^^^^^ meta.class.body.lime meta.block.lime meta.enum.body.lime meta.block.lime constant.other.enum.lime
+            VALUE2=3,
+    //      ^^^^^^ meta.class.body.lime meta.block.lime meta.enum.body.lime meta.block.lime constant.other.enum.lime
+    //            ^ meta.class.body.lime meta.block.lime meta.enum.body.lime meta.block.lime keyword.operator.assignment.lime
+    //             ^ meta.class.body.lime meta.block.lime meta.enum.body.lime meta.block.lime constant.numeric.integer.decimal.lime
+        }
+
+        constructor create()
+    //  ^^^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.function.lime
+    //              ^^^^^^ meta.class.body.lime meta.block.lime meta.method.identifier.lime entity.name.function.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+        constructor create() throws Exception
+    //  ^^^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.function.lime
+    //              ^^^^^^ meta.class.body.lime meta.block.lime meta.method.identifier.lime entity.name.function.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+    //                       ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.throws.lime
+    //                              ^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        constructor create() throws full.path.Exception
+    //                              ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                                  ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                   ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                                       ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                        ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+        constructor create(variable1: VariableType)
+    //                     ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime variable.parameter.property.lime
+    //                              ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+    //                                ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+        constructor create(variable1: VariableType, variable2: List<Integer>)
+    //                     ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime variable.parameter.property.lime
+    //                              ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+    //                                ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+    //                                              ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime variable.parameter.property.lime
+    //                                                       ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+    //                                                         ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+    //                                                             ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                                                              ^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.generic.lime support.class.lime
+    //                                                                     ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.generic.lime punctuation.definition.generic.end.lime
+        constructor create(variable1: VariableType?)
+    //                                            ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+
+        constructor create(variable1: full.path.Type)
+    //                                ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+    //                                    ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                     ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+    //                                         ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                          ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.class.lime
+        internal constructor create()
+    //  ^^^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+    //           ^^^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.function.lime
+
+        fun foo()
+    //  ^^^ meta.class.body.lime meta.block.lime keyword.declaration.function.lime
+    //      ^^^ meta.class.body.lime meta.block.lime meta.method.identifier.lime entity.name.function.lime
+    //         ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+    //          ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+        fun foo() throws Exception
+    //            ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.throws.lime
+    //                   ^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        fun foo() throws full.path.Exception
+    //                   ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                       ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                        ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                             ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+        fun foo(): ReturnType
+    //           ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //             ^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        fun foo(): ReturnType?
+    //                       ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+        fun foo(): List<Integer>
+    //             ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                 ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                  ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                         ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+        fun foo(): Map<Integer,String>?
+    //             ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+    //                 ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                        ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+    //                         ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+    //                               ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+    //                                ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+        fun foo(): Map<Integer,String>? throws Exception
+    //                                  ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.throws.lime
+    //                                         ^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        fun foo(): Map<Integer,String>? throws full.path.Exception
+    //                                         ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                                             ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                              ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                                                  ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                                   ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+        fun foo(
+            // Documentation for variable1
+        //  ^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime
+            variable1: VariableType,
+        //  ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime variable.parameter.property.lime
+        //           ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+        //             ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+            // Documentation for variable1 with [data.Reference]
+        //  ^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime
+        //                                      ^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime markup.underline.link.lime
+            variable2: VariableType?,
+        //                         ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+            // Documentation for variable1 with {@Swift only annotation}
+        //  ^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime
+        //                                      ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.begin.lime
+        //                                       ^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+        //                                              ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+        //                                                             ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
+            variable3: List<Integer>
+        //             ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+        //                 ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.generic.lime punctuation.definition.generic.begin.lime
+        //                  ^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.generic.lime support.class.lime
+        //                         ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.generic.lime punctuation.definition.generic.end.lime
+            ):
+        //  ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+        //   ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+            // Documentation for return value 
+        //  ^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+            Map<Integer, String>? throws
+        //  ^^^ meta.class.body.lime meta.block.lime support.class.lime
+        //     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.begin.lime
+        //      ^^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+        //             ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.separator.comma.lime
+        //               ^^^^^^ meta.class.body.lime meta.block.lime meta.generic.lime support.class.lime
+        //                     ^ meta.class.body.lime meta.block.lime meta.generic.lime punctuation.definition.generic.end.lime
+        //                      ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.1.lime
+        //                        ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.throws.lime
+            // Documentation for exception
+        //  ^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+            full.path.Exception
+        //  ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+        //      ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+        //       ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+        //           ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+        //            ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+
+        // Some Description
+        // @param[variable1] variable description
+    //     ^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime keyword.other.documentation.code-or-literal.lime
+    //           ^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime markup.underline.link.lime
+        // @return Some value
+    //     ^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime keyword.other.documentation.code-or-literal.lime
+    //             ^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+        // @throws Some exception
+    //     ^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime keyword.other.documentation.code-or-literal.lime
+    //             ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+        fun foo(variable1: VariableType): Map<Integer, String>? throws full.path.Exception
+
+        // @get Gets something
+    //     ^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime keyword.other.documentation.code-or-literal.lime
+        // @set Sets something
+    //     ^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime keyword.other.documentation.code-or-literal.lime
+        property variable_name: PropertyType {get set}
+
+        // escaped \@param \{elements\} \\
+    //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.lime
+
+        // escaped {@Swift \@Dart text \} more text} common text
+    //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+
+        @Dart(Default)
+    //  ^ meta.class.body.lime meta.block.lime meta.annotation.lime punctuation.definition.annotation.lime
+    //   ^^^^ meta.class.body.lime meta.block.lime meta.annotation.lime variable.annotation.lime
+    //        ^^^^^^^ meta.class.body.lime meta.block.lime meta.annotation.lime variable.parameter.lime
+        constructor create()
+
+        @Cpp(ExternalType = "external_type", ExternalName = "external_name")
+    //       ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.annotation.lime variable.parameter.lime
+    //                    ^ keyword.operator.assignment.lime
+    //                       ^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.annotation.lime string.quoted.double.lime
+    //                                     ^ meta.class.body.lime meta.block.lime meta.annotation.lime punctuation.separator.comma.lime
+    //                                       ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.annotation.lime variable.parameter.lime
+    //                                                    ^ keyword.operator.assignment.lime
+    //                                                       ^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.annotation.lime string.quoted.double.lime
+        fun foo(): ReturnType
+        
+
+        lambda bar = () -> ReturnType
+    //  ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.function.lime
+    //         ^^^ meta.class.body.lime meta.block.lime meta.method.identifier.lime entity.name.function.lime
+    //             ^ meta.class.body.lime meta.block.lime keyword.operator.assignment.lime
+    //               ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+    //                ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+    //                  ^^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //                     ^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        lambda bar = () -> ReturnType throws Exception
+    //                                ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.throws.lime
+    //                                       ^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+
+        lambda bar = (VariableType) -> ReturnType
+    //                ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+        lambda bar = (@Java("name1") VariableType?) -> ReturnType
+    //                ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.definition.annotation.lime
+    //                 ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime variable.annotation.lime
+    //                     ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.section.parens.begin.lime
+    //                      ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime string.quoted.double.lime punctuation.definition.string.begin.lime
+    //                       ^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime string.quoted.double.lime
+    //                             ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.section.parens.end.lime
+    //                               ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime variable.annotation.lime
+    //                                           ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+        lambda bar = (full.path.VariableType) -> ReturnType
+    //                ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+    //                    ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+    //                     ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+    //                         ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+    //                          ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.class.lime
+        lambda bar = (VariableType?) -> ReturnType
+    //                            ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+        lambda bar = (VariableType, VariableType?) -> ReturnType
+    //                ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.separator.comma.lime
+    //                              ^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+    //                                          ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+
+        lambda bar = (
+            // Documentation for variable1
+        //  ^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime
+            @Java(param1="name1") VariableType,
+        //  ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.definition.annotation.lime
+        //   ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime variable.annotation.lime
+        //       ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.section.parens.begin.lime
+        //        ^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime variable.parameter.lime
+        //              ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime keyword.operator.assignment.lime
+        //               ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime string.quoted.double.lime punctuation.definition.string.begin.lime
+        //                ^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime string.quoted.double.lime
+        //                      ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.section.parens.end.lime
+            // Documentation for variable1 with {@Swift only annotation}
+        //  ^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+        //                                       ^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+        //                                              ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
+            @Java("name2") full.path.VariableType?) ->
+        //  ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime punctuation.definition.annotation.lime
+        //   ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.annotation.lime variable.annotation.lime
+        //                                       ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime keyword.operator.declaration.lime
+        // Documentation for return value
+    //  ^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+    //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+        ReturnType? throws
+    //  ^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //            ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+    //              ^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.throws.lime
+        // Documentation for exception
+    //  ^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime punctuation.definition.comment.lime
+    //     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime comment.line.double-slash.lime
+        Exception
+    //  ^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+
+        exception MyException(ExceptionEnum)
+    //  ^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.class.lime
+    //            ^^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                       ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+    //                        ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime support.class.lime
+    //                                     ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+        exception MyException(full.path.ExceptionEnum)
+    //  ^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.class.lime
+    //            ^^^^^^^^^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                       ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+    //                        ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+    //                            ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+    //                             ^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+    //                                 ^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+    //                                  ^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.method.parameters.lime meta.parens.lime meta.path.lime support.class.lime
+
+        typealias Foo = Bar
+    //  ^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.class.lime
+    //            ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                ^ meta.class.body.lime meta.block.lime keyword.operator.assignment.lime
+    //                  ^^^ meta.class.body.lime meta.block.lime support.class.lime
+        typealias Foo = full.path.Bar
+    //  ^^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.class.lime
+    //            ^^^ meta.class.body.lime meta.block.lime support.class.lime
+    //                ^ meta.class.body.lime meta.block.lime keyword.operator.assignment.lime
+    //                  ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                      ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                       ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
+    //                           ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
+    //                            ^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+    }
+
+    exception MyException(ExceptionEnum)
+//  ^^^^^^^^^ keyword.declaration.class.lime
+//            ^^^^^^^^^^^ support.class.lime
+//                       ^ meta.method.parameters.lime meta.parens.lime punctuation.section.parens.begin.lime
+//                        ^^^^^^^^^^^^^ meta.method.parameters.lime meta.parens.lime support.class.lime
+//                                     ^ meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+    exception MyException(full.path.ExceptionEnum)
+//                        ^^^^ meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+//                            ^ meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+//                             ^^^^ meta.method.parameters.lime meta.parens.lime meta.path.lime support.type.package.lime
+//                                 ^ meta.method.parameters.lime meta.parens.lime meta.path.lime punctuation.accessor.dot.lime
+//                                  ^^^^^^^^^^^^^ meta.method.parameters.lime meta.parens.lime meta.path.lime support.class.lime
+//                                               ^ meta.method.parameters.lime meta.parens.lime punctuation.section.parens.end.lime
+
+    class Bar : Foo {
+//            ^ keyword.operator.declaration.lime
+//              ^^^ entity.name.class.lime
+    }
+
+    typealias Foo = Bar
+//  ^^^^^^^^^ keyword.declaration.class.lime
+//            ^^^ support.class.lime
+//                ^ keyword.operator.assignment.lime
+//                  ^^^ support.class.lime
+    typealias Foo = full.path.Bar
+//  ^^^^^^^^^ keyword.declaration.class.lime
+//            ^^^ support.class.lime
+//                ^ keyword.operator.assignment.lime
+//                  ^^^^ meta.path.lime support.type.package.lime
+//                      ^ meta.path.lime punctuation.accessor.dot.lime
+//                       ^^^^ meta.path.lime support.type.package.lime
+//                           ^ meta.path.lime punctuation.accessor.dot.lime
+//                            ^^^ meta.path.lime support.class.lime
+
+    const variable: Int = 42
+//  ^^^^^ storage.modifier.lime
+//        ^^^^^^^^ variable.parameter.lime
+//                ^ keyword.operator.declaration.lime
+//                  ^^^ support.class.lime
+//                      ^ keyword.operator.assignment.lime
+//                        ^^ constant.numeric.integer.decimal.lime
+
+
+    

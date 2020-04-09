@@ -1,0 +1,638 @@
+%YAML 1.2
+---
+
+name: Gluecodium
+file_extensions:
+  - lime
+scope: source.lime
+
+variables:
+  id_name: ([\p{L}_][\p{L}\p{N}_]*)
+  id: (?:{{id_name}})
+
+  classcase_id: (?:\p{Lu}[\p{L}\p{N}_]*)
+  keywords: (fun|constructor|throws|const)
+  storage_modifiers: (?:public|internal|open|static)
+
+  lowercase_id: (?:[_]*\p{Ll}[\p{Ll}\p{N}_]*\b)
+  before_fqn: (?={{lowercase_id}}\s*\.)
+
+  # digits
+  ddigits0: '\d[\d_]*?(_*)'
+  ddigits: (?:(_*){{ddigits0}})
+  exponent: '[-+]?{{ddigits}}'
+  eexponent: (?:[eE]{{exponent}})
+
+contexts:
+  # The prototype context is prepended to all contexts but those setting
+  # meta_include_prototype: false.
+  prototype:
+    - include: comments
+    - include: documentation
+    - include: annotations
+
+  immediate_POP:
+    - match: ''
+      pop: true
+
+  any_POP:
+    - match: (?=\S)
+      pop: true
+
+  main:
+    - include: package-statement
+    - include: import-statement
+    - include: constant-declaration
+    - include: keywords
+    - include: numbers
+    - include: strings
+    - include: constants-and-special-vars
+    - include: class
+    - include: storage-modifiers
+    - include: lambda
+    - include: exception
+    - include: typealias
+
+  package-statement:
+    - match: \bpackage\b
+      scope: keyword.other.package.lime
+      push:
+        - match: '{{id}}'
+          set:
+            - meta_scope: meta.path.lime entity.name.namespace.lime
+            - include: dot-separated-identifier
+        - include: any_POP
+
+  import-statement:
+    - match: \bimport\b
+      scope: keyword.control.import.lime
+      push:
+        - match: '{{id}}'
+          set:
+            - meta_scope: meta.path.lime support.type.package.lime
+            - include: dot-separated-identifier
+        - include: any_POP
+
+  punctuation-accessor-dot:
+    - match: \.
+      scope: punctuation.accessor.dot.lime
+
+  dot-separated-identifier:
+    - match: '{{id}}'
+    - include: punctuation-accessor-dot
+    - include: immediate_POP
+
+  package:
+    - match: '{{lowercase_id}}'
+      scope: support.type.package.lime
+    - include: punctuation-accessor-dot
+
+  punctuation-separator-comma:
+    - match: \,
+      scope: punctuation.separator.comma.lime
+
+  annotations:
+    - match: \@
+      scope: punctuation.definition.annotation.lime
+      push:
+        - - meta_scope: meta.annotation.lime
+          - include: immediate_POP
+        - annotation-type-no-fqn
+
+
+  annotation-type-no-fqn:
+    - match: '{{classcase_id}}'
+      scope: variable.annotation.lime
+      push:
+        - match: \(
+          scope: punctuation.section.parens.begin.lime
+          push:
+            - match: \)
+              scope: punctuation.section.parens.end.lime
+              pop: true
+            - match: \b{{id}}\b
+              scope: variable.parameter.lime
+              push:
+                - match: \=
+                  scope: keyword.operator.assignment.lime
+                - include: any_POP
+            - include: strings
+            - include: punctuation-separator-comma
+        - include: any_POP
+    - include: any_POP
+
+  keywords:
+    - match: '\b{{keywords}}\b'
+      scope: keyword.control.lime
+
+  decimal-integer:
+    - match: (-)?\b{{ddigits0}}([lL])?\b
+      scope: constant.numeric.integer.decimal.lime
+      captures:
+        1: keyword.operator
+
+  numbers:
+    # decimal integers
+    - match: |-
+        (?x:
+          \b{{ddigits0}}
+          (?:
+            # 1., 1.1, 1.1e1, 1.1e-1, 1.e1, 1.e-1, 1.d, 1.1d, 1.1e1d, 1.1e-1d, 1.e1d, 1.e-1d
+            (\.) (?: {{ddigits}}? {{eexponent}}? ([dDfF])? \b )?
+            # 1e1 1e1d
+            | {{eexponent}} ([dDfF])? \b
+            # 1d
+            | ([dDfF]) \b
+          )
+          # .1, .1e1, .1e-1
+          | (\.) {{ddigits}} {{eexponent}}? ([dDfF])? \b
+        )
+      scope: constant.numeric.float.decimal.lime
+      captures:
+        1: invalid.illegal.numeric.lime
+        2: punctuation.separator.decimal.lime
+        3: invalid.illegal.numeric.lime
+        4: invalid.illegal.numeric.lime
+        5: invalid.illegal.numeric.lime
+        6: invalid.illegal.numeric.lime
+        7: storage.type.numeric.lime
+        8: invalid.illegal.numeric.lime
+        9: invalid.illegal.numeric.lime
+        10: storage.type.numeric.lime
+        11: storage.type.numeric.lime
+        12: punctuation.separator.decimal.lime
+        13: invalid.illegal.numeric.lime
+        14: invalid.illegal.numeric.lime
+        15: invalid.illegal.numeric.lime
+        16: invalid.illegal.numeric.lime
+        17: storage.type.numeric.lime
+    - include: decimal-integer
+
+
+  constants-and-special-vars:
+    - match: (-)Infinity\b
+      scope: constant.language.lime
+      captures:
+        1: keyword.operator
+    - match: \b(true|false|null|NaN|Infinity)\b
+      scope: constant.language.lime
+
+  enum-constant:
+    - match: (?=\b({{id_name}}\.)*{{classcase_id}}\.{{id_name}}\b)
+      push:
+        - match: '({{id_name}})(\.)'
+          captures:
+            1: support.class.lime
+            2: punctuation.accessor.dot.lime
+        - match: '{{id_name}}'
+          scope: constant.other.enum.lime
+          pop: true
+        - include: any_POP
+
+  strings:
+    - match: \"
+      scope: punctuation.definition.string.begin.lime
+      push:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.lime
+        - match: \"
+          scope: punctuation.definition.string.end.lime
+          pop: true
+        - include: strings-common
+
+  strings-common:
+    - match: \n
+      scope: invalid.illegal.newline.lime
+      pop: true
+    - match: \\.
+      scope: constant.character.escape.lime
+
+  comments:
+    - match: \#
+      scope: punctuation.definition.comment.lime
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.lime
+        - match: $\n?
+          pop: true
+
+  documentation:
+    - match: '//'
+      scope: punctuation.definition.comment.lime
+      push:
+        # This is an anonymous context push for brevity.
+        - meta_scope: comment.line.double-slash.lime
+        - match: $\n?
+          pop: true
+        - include: document-escaped-symbols
+        - include: document-inline-tag
+        - include: document-reference
+        - include: structured-doc-comments
+    - match: /\*
+      scope: punctuation.definition.comment.lime
+      push:
+        - meta_scope: comment.block.lime
+        - match: \*/
+          scope: punctuation.definition.comment.lime
+          pop: true
+
+  code-tag-bracket-balancing:
+    - match: \{
+      scope: markup.raw.lime
+      push:
+        - match: \}
+          scope: markup.raw.lime
+          pop: true
+        - include: code-tag-bracket-balancing
+        - match: .
+          scope: markup.raw.lime
+
+  document-reference:
+    - match: \[({{id_name}}\.)*{{id_name}}+\]
+      scope: markup.underline.link.lime
+
+  structured-doc-comments:
+    - match: \@(param|return|throws|get|set|constructor)\b
+      scope: keyword.other.documentation.code-or-literal.lime
+
+  document-escaped-symbols:
+    - match: (\\\\|\\@|\\{|\\})
+      scope: constant.character.escape.lime
+
+  document-inline-tag:
+    - match: ({)(((@)(?:Java|Swift|Dart|Cpp)(?:\s+))+)(?:\s*|(?=\}))
+      captures:
+        1: punctuation.section.inline-tag.begin.lime
+        2: keyword.other.documentation.code-or-literal.lime
+      push:
+        - meta_scope: meta.inline-tag.lime
+        - include: document-escaped-symbols
+        - include: document-inline-tag-terminator
+        - include: code-tag-bracket-balancing
+        - include: document-reference
+        - match: ^\s+
+        - match: .
+          scope: markup.raw.lime
+
+  document-inline-tag-terminator:
+    - match: \}
+      scope: punctuation.section.inline-tag.end.lime
+      pop: true
+
+  storage-modifiers:
+    - match: \b{{storage_modifiers}}\b
+      scope: storage.modifier.lime
+
+  generic-type-invocation:
+    - match: <
+      scope: punctuation.definition.generic.begin.lime
+      set: generic-type-argument
+    - include: any_POP
+
+  generic-type-argument:
+    - meta_scope: meta.generic.lime
+    - include: generic-type-terminator
+    - include: object-and-array-types
+    - include: punctuation-separator-comma
+
+  generic-type-terminator:
+    - match: '>'
+      scope: punctuation.definition.generic.end.lime
+      pop: true
+
+  type-initialization:
+    - meta_scope: meta.braces.type-initialization.lime
+    - match: \}
+      scope: punctuation.section.braces.end.lime
+      pop: true
+    - match: \{
+      scope: punctuation.section.braces.begin.lime
+      push: type-initialization
+    - match: ({{id}})(?=\s*\=)
+      scope: variable.parameter.lime
+      push:
+        - match: \=
+          scope: keyword.operator.assignment.lime
+          pop: true
+    - include: constants-and-special-vars
+    - include: strings
+    - include: numbers
+    - include: punctuation-separator-comma
+
+  array-initialization:
+    - meta_scope: meta.brackets.array-initialization.lime
+    - include: array-initialization-common
+
+  array-initialization-common:
+    - match: \]
+      scope: punctuation.section.brackets.end.lime
+      pop: true
+    - match: \[
+      scope: punctuation.section.brackets.begin.lime
+      push: array-initialization
+    - match: '\:'
+      scope: keyword.operator.assignment.lime
+    - include: constants-and-special-vars
+    - include: strings
+    - include: numbers
+    - include: punctuation-separator-comma
+
+  object-and-array-types:
+    - match: '{{before_fqn}}'
+      push:
+        - meta_scope: meta.path.lime
+        - include: package
+        - include: object-and-array-types-no-fqn
+    - match: \b{{classcase_id}}
+      scope: support.class.lime
+      push: after-object-and-array-types
+
+  object-and-array-types-no-fqn:
+    - match: '{{classcase_id}}'
+      scope: support.class.lime
+      set: after-object-and-array-types
+    - include: any_POP
+
+  after-object-and-array-types:
+    - match: (?=<)
+      set: [generic-type-invocation]
+    - include: nullable
+    - match: \.(?!\.)
+      scope: punctuation.accessor.dot.lime
+      set: object-and-array-types-no-fqn
+    - include: any_POP
+
+  nullable:
+    - match: \?
+      scope: keyword.operator.declaration.lime
+
+  enum-block:
+    - meta_scope: meta.enum.lime
+    - match: \{
+      scope: punctuation.section.block.begin.lime
+      set:
+        - meta_scope: meta.enum.body.lime meta.block.lime
+        - match: \}
+          scope: punctuation.section.block.end.lime
+          pop: true
+        - match: '{{id}}'
+          scope: constant.other.enum.lime
+          push:
+            - match: \=
+              scope: keyword.operator.assignment.lime
+              push:
+              - include: decimal-integer
+              - include: any_POP
+            - include: any_POP
+        - include: punctuation-separator-comma
+    - include: any_POP
+
+  class:
+    - match: (?=({{storage_modifiers}}\s+)*(?:class|types|struct|interface|enum)\b)
+      push: [class-type]
+
+  class-type:
+    - include: storage-modifiers
+    - match: (?:class|types|struct|interface)\b
+      scope: keyword.declaration.class.lime
+      set:
+        - class-block
+        - class-extends
+        - class-name
+    - match: enum\b
+      scope: keyword.declaration.enum.lime
+      set:
+        - enum-block
+        - enum-name
+    - include: any_POP
+
+  enum-name:
+    - meta_scope: meta.enum.identifier.lime
+    - match: \b{{id}}\b
+      scope: entity.name.enum.lime
+      pop: true
+    - include: any_POP
+
+  class-name:
+    - meta_scope: meta.class.identifier.lime
+    - match: \b{{id}}\b
+      scope: entity.name.class.lime
+      pop: true
+    - include: any_POP
+
+  class-extends:
+    - match: (\:)
+      scope: keyword.operator.declaration.lime
+    - match: '{{id}}'
+      set:
+        - meta_scope: entity.name.class.lime
+        - include: dot-separated-identifier
+    - include: any_POP
+
+  class-block:
+    - match: \{
+      scope: punctuation.section.block.begin.lime
+      set:
+        - meta_scope: meta.class.body.lime meta.block.lime
+        - match: \}
+          scope: punctuation.section.block.end.lime
+          pop: true
+        - include: class-body
+    - include: any_POP
+
+  class-body:
+    - include: class
+    - include: annotations
+    - include: storage-modifiers
+    - include: property-declaration
+    - include: constant-declaration
+    - include: variable-declaration
+    - include: constructor
+    - include: function
+    - include: lambda
+    - include: exception
+    - include: typealias
+
+  object-type-fqn:
+    - meta_scope: meta.path.lime
+    - match: '{{classcase_id}}'
+      scope: support.class.lime
+      pop: true
+    - include: any_POP
+
+
+  type-fqn:
+    - match: '{{lowercase_id}}'
+      scope: support.type.package.lime
+    - include: punctuation-accessor-dot
+    - include: any_POP
+
+  type-nullable:
+    - match: \?
+      scope: keyword.operator.declaration.1.lime
+    - include: any_POP
+
+  type-definition:
+    - match: (\:|->)
+      scope: keyword.operator.declaration.lime
+      push:
+      - match: '{{before_fqn}}'
+        scope: support.class.lime
+        set: [after-object-and-array-types, object-type-fqn, type-fqn]
+      - match: \b{{classcase_id}}
+        scope: support.class.lime
+        set: [type-nullable, after-object-and-array-types]
+      - include: any_POP
+
+  variable-declaration:
+    - match: ({{id}})\s*(?=\:)
+      scope: variable.parameter.lime
+      push:
+        - match: (?=\:)
+          push:
+            - include: type-definition
+            - include: any_POP
+        - match: \=
+          scope: keyword.operator.assignment.lime
+          push:
+            - include: constants-and-special-vars
+            - include: numbers
+            - include: array-initialization
+            - include: type-initialization
+            - include: strings
+            - include: enum-constant
+            - include: any_POP
+        - include: any_POP
+
+  constant-declaration:
+    - match: (const)(?=\s*{{id}}\s*\:)
+      scope: storage.modifier.lime
+      push:
+        - include: variable-declaration
+        - include: any_POP
+
+  property-declaration:
+    - match: (property)\s*({{id}})\s*(?=\:)
+      captures:
+          1: entity.name.function.lime
+          2: variable.parameter.property.lime
+      push:
+      - include: type-definition
+      - match: \{
+        scope: punctuation.section.block.begin.lime
+        push:
+          - match: \b(get|set)\b
+            scope: keyword.control.lime
+          - match: internal
+            scope: storage.modifier.lime
+          - match: \}
+            scope: punctuation.section.block.end.lime
+            pop: true
+      - include: any_POP
+
+  constructor:
+    - match: \bconstructor\b
+      scope: keyword.declaration.function.lime
+      push:
+        - include: method
+        - include: throws
+        - include: any_POP
+
+  function:
+    - match: \bfun\b
+      scope: keyword.declaration.function.lime
+      push:
+        - include: method
+        - include: type-definition
+        - include: throws
+        - include: any_POP
+
+  method:
+    - meta_scope: meta.method.lime
+    - match: ({{id}})\s*(?=\()
+      scope: meta.method.identifier.lime entity.name.function.lime
+    - match: \(
+      scope: punctuation.section.parens.begin.lime
+      push:
+        - meta_scope: meta.method.parameters.lime meta.parens.lime
+        - match: \)
+          scope: punctuation.section.parens.end.lime
+          pop: true
+        - include: parameters
+
+  throws:
+    - match: \bthrows\b
+      scope: keyword.declaration.throws.lime
+      push:
+        - include: object-and-array-types
+        - include: any_POP
+
+  parameters:
+    - match: ({{id}})\s*(?=\:)
+      captures:
+        1: variable.parameter.property.lime
+      push:
+      - include: type-definition
+      - include: any_POP
+    - include: punctuation-separator-comma
+
+  parameter-type-list:
+    - include: object-and-array-types
+    - include: punctuation-separator-comma
+
+  lambda:
+    - match: \blambda\b
+      scope: keyword.declaration.function.lime
+      push:
+      - match: '{{id}}'
+        scope: meta.method.identifier.lime entity.name.function.lime
+        set:
+          - match: \=
+            scope: keyword.operator.assignment.lime
+            push:
+              - match: \(
+                scope: punctuation.section.parens.begin.lime
+                push:
+                  - meta_scope: meta.method.parameters.lime meta.parens.lime
+                  - match: \)
+                    scope: punctuation.section.parens.end.lime
+                    pop: true
+                  - include: parameter-type-list
+                  - include: nullable
+              - match: (?=->)
+                push:
+                - include: type-definition
+                - include: throws
+                - include: any_POP
+              - include: any_POP
+          - include: any_POP
+      - include: any_POP
+
+  exception:
+    - match: \bexception\b
+      scope: keyword.declaration.class.lime
+      push:
+        - include: object-and-array-types
+        - match: \(
+          scope: punctuation.section.parens.begin.lime
+          push:
+            - meta_scope: meta.method.parameters.lime meta.parens.lime
+            - match: \)
+              scope: punctuation.section.parens.end.lime
+              pop: true
+            - include: object-and-array-types
+            - include: any_POP
+        - include: any_POP
+
+  typealias:
+    - match: \btypealias\b
+      scope: keyword.declaration.class.lime
+      push:
+        - match: \b({{classcase_id}})\s*(=)
+          captures:
+            1: support.class.lime
+            2: keyword.operator.assignment.lime
+          push:
+            - include: object-and-array-types
+            - include: any_POP
+        - include: any_POP
