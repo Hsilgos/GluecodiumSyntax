@@ -4,4 +4,9 @@
 
 ## INSTALLATION
 Manual installation (MacOS):
-* Copy file Gluecodium.sublime-syntax to ~/Library/Application Support/Sublime Text 3/Packages/User/
+- Copy file `Gluecodium.sublime-syntax` to `~/Library/Application Support/Sublime Text 3/Packages/User/`
+
+With [Package Control](https://packagecontrol.io/docs/usage):
+- Open Command Palette: cmd+shift+p (Mac) or ctrl+shift+p (Win, Linux)
+- Type (or copy paste) there `Package Control: Install Package` and choose the element
+- Find and choose `Gluecodium` in Package Control Palette
