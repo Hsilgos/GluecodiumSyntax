@@ -523,7 +523,7 @@ contexts:
         push:
           - match: \b(get|set)\b
             scope: keyword.control.lime
-          - match: internal
+          - match: (internal|public)
             scope: storage.modifier.lime
           - match: \}
             scope: punctuation.section.block.end.lime

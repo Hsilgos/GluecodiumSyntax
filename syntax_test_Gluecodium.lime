@@ -431,6 +431,12 @@
         //           ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
         }
 
+        property variable_name: PropertyType {
+            public get
+        //  ^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
+        //         ^^^ meta.class.body.lime meta.block.lime keyword.control.lime
+        }
+
         static property variable_name: Map<Int, String?>? {
     //  ^^^^^^ meta.class.body.lime meta.block.lime storage.modifier.lime
     //                                                ^ meta.class.body.lime meta.block.lime meta.generic.lime keyword.operator.declaration.lime
