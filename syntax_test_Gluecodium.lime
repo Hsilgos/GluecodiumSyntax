@@ -65,6 +65,24 @@
 //                                                                           ^^^^^^^^ comment.line.double-slash.lime meta.inline-tag.lime markup.raw.lime
 //                                                                                   ^ comment.line.double-slash.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
 
+    /*Multiline documentation with {@Java specific text and [example.Reference]}*/
+//  ^^ comment.block.lime punctuation.definition.comment.lime
+//    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block.lime
+//                                 ^ comment.block.lime meta.inline-tag.lime punctuation.section.inline-tag.begin.lime
+//                                  ^^^^^^ comment.block.lime meta.inline-tag.lime keyword.other.documentation.code-or-literal.lime
+//                                        ^^^^^^^^^^^^^^^^^^ comment.block.lime meta.inline-tag.lime markup.raw.lime
+//                                                          ^^^^^^^^^^^^^^^^^^^ comment.block.lime meta.inline-tag.lime markup.underline.link.lime
+//                                                                             ^ comment.block.lime meta.inline-tag.lime punctuation.section.inline-tag.end.lime
+
+    /*Multiline documentation with @param[arg1] and @return*/
+//  ^^ comment.block.lime punctuation.definition.comment.lime
+//    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//                                 ^^^^^^ comment.block.lime keyword.other.documentation.code-or-literal.lime
+//                                       ^^^^^^ comment.block.lime markup.underline.link.lime
+//                                              ^^^ comment.block.lime
+//                                                  ^^^^^^^ comment.block.lime keyword.other.documentation.code-or-literal.lime
+//                                                         ^^ comment.block.lime punctuation.definition.comment.lime
+
     enum EnumName {
 //  ^^^^ meta.enum.lime meta.enum.identifier.lime keyword.declaration.enum
 //       ^^^^^^^^ meta.enum.lime meta.enum.identifier.lime entity.name.enum.lime

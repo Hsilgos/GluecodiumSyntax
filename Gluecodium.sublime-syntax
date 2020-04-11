@@ -211,7 +211,6 @@ contexts:
     - match: \#
       scope: punctuation.definition.comment.lime
       push:
-        # This is an anonymous context push for brevity.
         - meta_scope: comment.line.lime
         - match: $\n?
           pop: true
@@ -220,14 +219,10 @@ contexts:
     - match: '//'
       scope: punctuation.definition.comment.lime
       push:
-        # This is an anonymous context push for brevity.
         - meta_scope: comment.line.double-slash.lime
         - match: $\n?
           pop: true
-        - include: document-escaped-symbols
-        - include: document-inline-tag
-        - include: document-reference
-        - include: structured-doc-comments
+        - include: documentation-markup
     - match: /\*
       scope: punctuation.definition.comment.lime
       push:
@@ -235,6 +230,13 @@ contexts:
         - match: \*/
           scope: punctuation.definition.comment.lime
           pop: true
+        - include: documentation-markup
+
+  documentation-markup:
+    - include: document-escaped-symbols
+    - include: document-inline-tag
+    - include: document-reference
+    - include: structured-doc-comments
 
   code-tag-bracket-balancing:
     - match: \{
