@@ -2722,4 +2722,30 @@
 //                        ^^ constant.numeric.integer.decimal.lime
 
 
-    
+    struct StructWithExternals {
+//  ^^^^^^ keyword.declaration.struct.lime
+//         ^^^^^^^^^^^^^^^^^^^ entity.name.struct.lime
+        external {
+//      ^^^^^^^^ meta.class.body.lime meta.block.lime keyword.declaration.class.lime
+//               ^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime punctuation.section.block.begin.lime
+            java name "com.example.Type"
+//          ^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
+//                    ^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
+            java converter "com.example.TypeConverter"
+//          ^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
+//                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
+
+            dart converterImport "../type_converter.dart"
+//          ^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
+//                               ^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
+            dart converter "TypeConverter"
+//          ^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
+//                         ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
+            swift framework "UIKit"
+//          ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
+//                          ^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
+            swift converter "TypeConverter"
+//          ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
+//                          ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
+        }
+    }

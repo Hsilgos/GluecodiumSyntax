@@ -26,6 +26,8 @@ variables:
   exponent: '[-+]?{{ddigits}}'
   eexponent: (?:[eE]{{exponent}})
 
+  external_fields: (java\s+(name|converter))|(dart\s+converter(Import)?)|(swift\s+(framework|converter))
+
 contexts:
   # The prototype context is prepended to all contexts but those setting
   # meta_include_prototype: false.
@@ -476,6 +478,7 @@ contexts:
         - include: variable-declaration
         - include: constructor
         - include: function
+        - include: external
         # - include: lambda # TODO
         # - include: exception # TODO
         # - include: typealias # TODO
@@ -919,4 +922,22 @@ contexts:
           push:
             - include: object-and-array-types
             - include: any_POP
+        - include: any_POP
+
+  external:
+    - match: \bexternal\b
+      scope: keyword.declaration.class.lime
+      push:
+        - match: \{
+          scope: punctuation.section.block.begin.lime
+          set:
+            - meta_scope: meta.class.body.lime meta.block.lime
+            - match: \}
+              scope: punctuation.section.block.end.lime
+              pop: true
+            - match: \b({{external_fields}})\b
+              scope: keyword.other.external-java-name.lime
+              push:
+                - include: strings
+                - include: any_POP
         - include: any_POP
