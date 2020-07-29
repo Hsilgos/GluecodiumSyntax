@@ -2748,4 +2748,10 @@
 //          ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime keyword.other.external-java-name.lime
 //                          ^^^^^^^^^^^^^^^ meta.class.body.lime meta.block.lime meta.class.body.lime meta.block.lime string.quoted.double.lime
         }
+
+        field: Type
+//      ^^^^^ meta.class.body.lime meta.block.lime variable.parameter.lime
+//           ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+//             ^^^^ meta.class.body.lime meta.block.lime support.class.lime
     }
+//  ^ meta.class.body.lime meta.block.lime punctuation.section.block.end.lime
