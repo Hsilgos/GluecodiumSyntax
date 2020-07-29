@@ -844,6 +844,16 @@
 //                          ^^^^ meta.class.body.lime meta.block.lime support.type.package.lime
 //                              ^ meta.class.body.lime meta.block.lime punctuation.accessor.dot.lime
 //                               ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+        property prop: Full.Path.Type
+//      ^^^^^^^^ meta.class.body.lime meta.block.lime entity.name.function.lime
+//               ^^^^ meta.class.body.lime meta.block.lime variable.parameter.property.lime
+//                   ^ meta.class.body.lime meta.block.lime keyword.operator.declaration.lime
+//                     ^^^^ meta.class.body.lime meta.block.lime support.type.package.lime
+//                         ^ meta.class.body.lime meta.block.lime punctuation.accessor.dot.lime
+//                          ^^^^ meta.class.body.lime meta.block.lime support.type.package.lime
+//                              ^ meta.class.body.lime meta.block.lime punctuation.accessor.dot.lime
+//                               ^^^^ meta.class.body.lime meta.block.lime support.class.lime
+
         property prop: full.path.Type?
 //      ^^^^^^^^ meta.class.body.lime meta.block.lime entity.name.function.lime
 //               ^^^^ meta.class.body.lime meta.block.lime variable.parameter.property.lime
@@ -2647,6 +2657,14 @@
     //                       ^^^^ meta.class.body.lime meta.block.lime meta.path.lime support.type.package.lime
     //                           ^ meta.class.body.lime meta.block.lime meta.path.lime punctuation.accessor.dot.lime
     //                            ^^^ meta.class.body.lime meta.block.lime meta.path.lime support.class.lime
+    }
+
+    class Foo {
+        interface Bar {
+
+        }
+
+        fun bar(): Type
     }
 
     class Foo {

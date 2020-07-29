@@ -15,7 +15,10 @@ variables:
   storage_modifiers: (?:public|internal|open|static)
 
   lowercase_id: (?:[_]*\p{Ll}[\p{Ll}\p{N}_]*\b)
-  before_fqn: (?={{lowercase_id}}\s*\.)
+  # before_fqn: (?={{lowercase_id}}\s*\.) Obsolete
+
+  path_fqn: ({{id_name}}(?=\.))
+  before_fqn: (?={{id_name}}\.)
 
   # digits
   ddigits0: '\d[\d_]*?(_*)'
@@ -643,7 +646,7 @@ contexts:
       set:
         - match: '{{before_fqn}}'
           set:
-          - match: '\b{{lowercase_id}}'
+          - match: '\b{{path_fqn}}'
             scope: support.type.package.lime
           - include: punctuation-accessor-dot
           - match: '\b{{classcase_id}}'
@@ -681,7 +684,7 @@ contexts:
       set:
         - match: '{{before_fqn}}'
           set:
-          - match: '\b{{lowercase_id}}'
+          - match: '\b{{path_fqn}}'
             scope: support.type.package.lime
           - include: punctuation-accessor-dot
           - match: '\b{{classcase_id}}'
@@ -703,7 +706,7 @@ contexts:
       set:
         - match: '{{before_fqn}}'
           set:
-          - match: '\b{{lowercase_id}}'
+          - match: '\b{{path_fqn}}'
             scope: support.type.package.lime
           - include: punctuation-accessor-dot
           - match: '\b{{classcase_id}}'
@@ -725,7 +728,7 @@ contexts:
       set:
         - match: '{{before_fqn}}'
           set:
-          - match: '\b{{lowercase_id}}'
+          - match: '\b{{path_fqn}}'
             scope: support.type.package.lime
           - include: punctuation-accessor-dot
           - match: '\b{{classcase_id}}'
