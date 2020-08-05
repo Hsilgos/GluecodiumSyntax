@@ -26,7 +26,7 @@ variables:
   exponent: '[-+]?{{ddigits}}'
   eexponent: (?:[eE]{{exponent}})
 
-  external_fields: (java\s+(name|converter))|(dart\s+(converter(Import)?|importPath))|(swift\s+(framework|converter))
+  external_fields: (cpp\s+(include|name))|(java\s+(name|converter))|(dart\s+(converter(Import)?|importPath))|(swift\s+(framework|converter))
 
 contexts:
   # The prototype context is prepended to all contexts but those setting
